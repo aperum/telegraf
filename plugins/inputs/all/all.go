@@ -51,6 +51,7 @@ import (
 	_ "github.com/influxdata/telegraf/plugins/inputs/fluentd"
 	_ "github.com/influxdata/telegraf/plugins/inputs/github"
 	_ "github.com/influxdata/telegraf/plugins/inputs/gnmi"
+	_ "github.com/influxdata/telegraf/plugins/inputs/gpsd"
 	_ "github.com/influxdata/telegraf/plugins/inputs/graylog"
 	_ "github.com/influxdata/telegraf/plugins/inputs/haproxy"
 	_ "github.com/influxdata/telegraf/plugins/inputs/hddtemp"
