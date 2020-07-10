@@ -75,6 +75,10 @@ func (g *Gpsd) SetupSKYReports(acc telegraf.Accumulator) func(r interface{}) {
 		var report_time string = ""
 
 		sky := r.(*gpsd.SKYReport)
+		tags := map[string]string{
+			"device": sky.Device,
+		}
+
 		if ( !sky.Time.IsZero() ) {
 			report_time = strconv.FormatInt(sky.Time.UnixNano(), 10)
 		}
@@ -90,18 +94,16 @@ func (g *Gpsd) SetupSKYReports(acc telegraf.Accumulator) func(r interface{}) {
 			visible = len(sky.Satellites)
 
 			fields := map[string]interface{}{
-				"device":	sky.Device,
 				"report_time":	report_time,
 				"visible": 	visible,
 				"used":    	used,
 			}
 			inputName := strings.Join([]string{measurement, satcount_suffix}, "_")
-			acc.AddCounter(inputName, fields, nil)
+			acc.AddCounter(inputName, fields, tags)
 		}
 
 		if g.ReportSKY {
 			fields := map[string]interface{}{
-				"device":	sky.Device,
 				"report_time":	report_time,
 				"Xdop":		sky.Xdop,
 				"Ydop":		sky.Ydop,
@@ -112,7 +114,7 @@ func (g *Gpsd) SetupSKYReports(acc telegraf.Accumulator) func(r interface{}) {
 				"Gdop":		sky.Gdop,
 			}
 			inputName := strings.Join([]string{measurement, sky_suffix}, "_")
-			acc.AddCounter(inputName, fields, nil)
+			acc.AddCounter(inputName, fields, tags)
 		}
 	}
 }
@@ -126,8 +128,10 @@ func (g *Gpsd) SetupTPVReports(acc telegraf.Accumulator) func(r interface{}) {
 			report_time = strconv.FormatInt(tpv.Time.UnixNano(), 10)
 		}
 
+		tags := map[string]string{
+			"device": tpv.Device,
+		}
 		fields := map[string]interface{}{
-			"device":	tpv.Device,
 			"report_time":	report_time,
 			"mode":		tpv.Mode,
 			"ept":		tpv.Ept,
@@ -145,7 +149,7 @@ func (g *Gpsd) SetupTPVReports(acc telegraf.Accumulator) func(r interface{}) {
 			"epc":		tpv.Epc,
 		}
 		inputName := strings.Join([]string{measurement, tpv_suffix}, "_")
-		acc.AddCounter(inputName, fields, nil)
+		acc.AddCounter(inputName, fields, tags)
 	}
 }
 
@@ -158,8 +162,10 @@ func (g *Gpsd) SetupGSTReports(acc telegraf.Accumulator) func(r interface{}) {
 			report_time = strconv.FormatInt(gst.Time.UnixNano(), 10)
 		}
 
+		tags := map[string]string{
+			"device": gst.Device,
+		}
 		fields := map[string]interface{}{
-			"device":	gst.Device,
 			"report_time":	report_time,
 			"rms":		gst.Rms,
 			"major":	gst.Major,
@@ -170,7 +176,7 @@ func (g *Gpsd) SetupGSTReports(acc telegraf.Accumulator) func(r interface{}) {
 			"alt":		gst.Alt,
 		}
 		inputName := strings.Join([]string{measurement, gst_suffix}, "_")
-		acc.AddCounter(inputName, fields, nil)
+		acc.AddCounter(inputName, fields, tags)
 	}
 }
 
@@ -183,8 +189,10 @@ func (g *Gpsd) SetupATTReports(acc telegraf.Accumulator) func(r interface{}) {
 			report_time = strconv.FormatInt(att.Time.UnixNano(), 10)
 		}
 
+		tags := map[string]string{
+			"device": att.Device,
+		}
 		fields := map[string]interface{}{
-			"device":	att.Device,
 			"report_time":	report_time,
 			"heading":	att.Heading,
 			"magst":	att.MagSt,
@@ -209,7 +217,7 @@ func (g *Gpsd) SetupATTReports(acc telegraf.Accumulator) func(r interface{}) {
 			"temperature":	att.Temperature,	
 		}
 		inputName := strings.Join([]string{measurement, att_suffix}, "_")
-		acc.AddCounter(inputName, fields, nil)
+		acc.AddCounter(inputName, fields, tags)
 	}
 }
 
@@ -217,15 +225,17 @@ func (g *Gpsd) SetupPPSReports(acc telegraf.Accumulator) func(r interface{}) {
 	return func(r interface{}) {
 		pps := r.(*gpsd.PPSReport)
 
+		tags := map[string]string{
+			"device": pps.Device,
+		}
 		fields := map[string]interface{}{
-			"device":	pps.Device,
 			"realsec":	pps.RealSec,
 			"realmusec":	pps.RealMusec,
 			"clocksec":	pps.ClockSec,
 			"clockmusec":	pps.ClockMusec,
 		}
 		inputName := strings.Join([]string{measurement, pps_suffix}, "_")
-		acc.AddCounter(inputName, fields, nil)
+		acc.AddCounter(inputName, fields, tags)
 	}
 }
 

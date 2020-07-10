@@ -31,12 +31,10 @@ The gpsd plugin collects metrics from the gpsd daemon.
 ### Measurements & Fields
 
 - gpsd_satcount
-  - device (string)
   - report_time (string)
   - used (float)
   - visible (float)
 - gpsd_sky
-  - device (string)
   - report_time (string)
   - xdop (float)
   - ydop (float)
@@ -46,7 +44,6 @@ The gpsd plugin collects metrics from the gpsd daemon.
   - pdop (float)
   - gdop (float)
 - gpsd_tpv
-  - device (string)
   - report_time (string)
   - mode (int)
   - ept (float)
@@ -63,7 +60,6 @@ The gpsd plugin collects metrics from the gpsd daemon.
   - eps (float)
   - epc (float)
 - gpsd_gst
-  - device (string)
   - report_time (string)
   - rms (float)
   - major (float)
@@ -73,7 +69,6 @@ The gpsd plugin collects metrics from the gpsd daemon.
   - lon (float)
   - alt (float)
 - gpsd_att
-  - device (string)
   - report_time (string)
   - heading (float)
   - magst (string)
@@ -97,14 +92,18 @@ The gpsd plugin collects metrics from the gpsd daemon.
   - depth (float)
   - temperature (float)
 - gpsd_pps
-  - device (string)
   - realsec (float)
   - realmusec (float)
   - clocksec (float)
   - clockmusec (float)
 
+### Tags
+
+  - All measurements have the following tags:
+    - device
+
 ### Example Output:
 ```toml
-gpsd_satcount,host=hostname report_time=1594395790000000000,used=5,visible=11 1594395787000000000
-gpsd_sky,host=hostname report_time=1594395153414630305,xdop=2.03,ydop=4.3,vdop=0.99,tdop=7.27,hdop=2.35,pdop=2.55,gdop=11.29 1594395153414630308
+gpsd_satcount,device=/dev/ttyAMA0,host=rpi report_time=1594395790000000000,used=5,visible=11 1594395787000000000
+gpsd_sky,device=/dev/ttyAMA0,host=rpi report_time=1594395153414630305,xdop=2.03,ydop=4.3,vdop=0.99,tdop=7.27,hdop=2.35,pdop=2.55,gdop=11.29 1594395153414630308
 ```
