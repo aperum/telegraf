@@ -133,7 +133,7 @@ func (g *Gpsd) SetupTPVReports(acc telegraf.Accumulator) func(r interface{}) {
 		}
 		fields := map[string]interface{}{
 			"report_time":	report_time,
-			"mode":		tpv.Mode,
+			"mode":		int(tpv.Mode),
 			"ept":		tpv.Ept,
 			"lat":		tpv.Lat,
 			"lon":		tpv.Lon,
